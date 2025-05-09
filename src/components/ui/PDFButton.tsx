@@ -4,6 +4,7 @@ import { Download } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { generatePDF } from '@/lib/pdfGenerator';
 import { ResumeData } from '@/lib/resumeTypes';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 interface PDFButtonProps {
   resumeData: ResumeData;
@@ -11,6 +12,8 @@ interface PDFButtonProps {
 }
 
 const PDFButton: React.FC<PDFButtonProps> = ({ resumeData, previewId }) => {
+  const isMobile = useIsMobile();
+  
   const handleDownload = () => {
     generatePDF(resumeData, previewId);
   };
@@ -18,10 +21,10 @@ const PDFButton: React.FC<PDFButtonProps> = ({ resumeData, previewId }) => {
   return (
     <Button 
       onClick={handleDownload}
-      className="bg-gradient-to-r from-cvfacile-orange to-cvfacile-accent hover:opacity-90"
+      className="bg-gradient-to-r from-cvfacile-orange to-cvfacile-accent hover:opacity-90 transition-all shadow-md"
     >
       <Download className="w-4 h-4 mr-2" />
-      Télécharger en PDF
+      {isMobile ? 'PDF' : 'Télécharger en PDF'}
     </Button>
   );
 };

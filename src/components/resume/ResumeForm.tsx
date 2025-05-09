@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import {
@@ -22,6 +21,8 @@ import { Plus, Trash2, ChevronDown } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent } from "@/components/ui/card";
 import { toast } from "sonner";
+import { useIsMobile } from "@/hooks/use-mobile";
+import ProfileUpload from "./ProfileUpload";
 
 interface ResumeFormProps {
   resumeData: ResumeData;
@@ -30,6 +31,7 @@ interface ResumeFormProps {
 
 const ResumeForm: React.FC<ResumeFormProps> = ({ resumeData, setResumeData }) => {
   const [activeTab, setActiveTab] = useState("personal");
+  const isMobile = useIsMobile();
   const [newSkill, setNewSkill] = useState({ name: "", level: 3 });
   const [newLanguage, setNewLanguage] = useState({ name: "", level: "Intermédiaire" });
   const [newExperience, setNewExperience] = useState<Omit<ResumeExperience, "id">>({
@@ -57,7 +59,7 @@ const ResumeForm: React.FC<ResumeFormProps> = ({ resumeData, setResumeData }) =>
     expiry: "",
   });
 
-  const updatePersonalInfo = (field: string, value: string) => {
+  const updatePersonalInfo = (field: string, value: string | null) => {
     setResumeData({
       ...resumeData,
       personalInfo: {
@@ -67,7 +69,10 @@ const ResumeForm: React.FC<ResumeFormProps> = ({ resumeData, setResumeData }) =>
     });
   };
 
-  // Expérience
+  const handleProfileImageChange = (imageUrl: string | null) => {
+    updatePersonalInfo("profileImage", imageUrl);
+  };
+
   const addExperience = () => {
     if (!newExperience.company || !newExperience.position) {
       toast.error("Veuillez remplir l'entreprise et le poste");
@@ -269,7 +274,7 @@ const ResumeForm: React.FC<ResumeFormProps> = ({ resumeData, setResumeData }) =>
   return (
     <Card className="w-full overflow-hidden border shadow-lg">
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-        <TabsList className="grid w-full grid-cols-6">
+        <TabsList className={`grid w-full ${isMobile ? 'grid-cols-3' : 'grid-cols-6'} overflow-x-auto`}>
           <TabsTrigger value="personal">Personnel</TabsTrigger>
           <TabsTrigger value="experience">Expérience</TabsTrigger>
           <TabsTrigger value="education">Formation</TabsTrigger>
@@ -280,7 +285,12 @@ const ResumeForm: React.FC<ResumeFormProps> = ({ resumeData, setResumeData }) =>
 
         {/* Informations personnelles */}
         <TabsContent value="personal" className="p-4 space-y-4">
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+          <ProfileUpload 
+            profileImage={resumeData.personalInfo.profileImage || null} 
+            onImageChange={handleProfileImageChange} 
+          />
+          
+          <div className={`grid grid-cols-1 gap-4 ${!isMobile ? 'md:grid-cols-2' : ''}`}>
             <div>
               <label className="block mb-1 text-sm font-medium">Prénom</label>
               <Input
@@ -308,7 +318,7 @@ const ResumeForm: React.FC<ResumeFormProps> = ({ resumeData, setResumeData }) =>
             />
           </div>
 
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+          <div className={`grid grid-cols-1 gap-4 ${!isMobile ? 'md:grid-cols-2' : ''}`}>
             <div>
               <label className="block mb-1 text-sm font-medium">Email</label>
               <Input
@@ -337,7 +347,7 @@ const ResumeForm: React.FC<ResumeFormProps> = ({ resumeData, setResumeData }) =>
             />
           </div>
 
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+          <div className={`grid grid-cols-1 gap-4 ${!isMobile ? 'md:grid-cols-2' : ''}`}>
             <div>
               <label className="block mb-1 text-sm font-medium">Site Web (optionnel)</label>
               <Input

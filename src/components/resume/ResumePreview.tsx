@@ -8,6 +8,7 @@ import MedicalTemplate from "./templates/MedicalTemplate";
 import PDFButton from "../ui/PDFButton";
 import ColorPicker from "./ColorPicker";
 import FontPicker from "./FontPicker";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 interface ResumePreviewProps {
   data: ResumeData;
@@ -15,6 +16,8 @@ interface ResumePreviewProps {
 }
 
 const ResumePreview: React.FC<ResumePreviewProps> = ({ data, updateResumeSettings }) => {
+  const isMobile = useIsMobile();
+  
   const renderTemplate = () => {
     switch (data.settings.template) {
       case "classic":
@@ -44,23 +47,23 @@ const ResumePreview: React.FC<ResumePreviewProps> = ({ data, updateResumeSetting
 
   return (
     <div className="space-y-6">
-      <div className="p-4 border rounded-lg bg-white">
-        <h3 className="mb-3 text-base font-semibold">Modèle de CV</h3>
-        <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
+      <div className="p-4 border rounded-lg bg-white shadow-sm">
+        <h3 className="mb-3 text-base font-medium flex items-center">Modèle de CV</h3>
+        <div className={`grid grid-cols-2 gap-3 ${!isMobile ? 'md:grid-cols-4' : ''}`}>
           {["classic", "modern", "creative", "medical"].map((template) => (
             <div
               key={template}
               onClick={() => handleTemplateChange(template as TemplateType)}
-              className={`p-4 border rounded-lg cursor-pointer template-hover ${
+              className={`p-3 border rounded-lg cursor-pointer transition-all hover:shadow-md ${
                 data.settings.template === template
-                  ? "border-cvfacile-primary bg-blue-50"
-                  : "border-gray-200"
+                  ? 'border-cvfacile-primary bg-blue-50'
+                  : 'border-gray-200'
               }`}
             >
-              <div className="mb-2 text-center capitalize">{template}</div>
+              <div className="mb-2 text-sm text-center capitalize">{template}</div>
               <div 
-                className={`w-full h-28 bg-gray-100 rounded-md overflow-hidden flex items-center justify-center ${
-                  data.settings.template === template ? "border-2 border-cvfacile-primary" : ""
+                className={`w-full h-24 bg-white rounded-md overflow-hidden flex items-center justify-center ${
+                  data.settings.template === template ? "border-2 border-cvfacile-primary" : "border"
                 }`}
                 style={{ backgroundColor: data.settings.template === template ? `${data.settings.colorScheme.primary}10` : "" }}
               >
@@ -73,7 +76,7 @@ const ResumePreview: React.FC<ResumePreviewProps> = ({ data, updateResumeSetting
         </div>
       </div>
 
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+      <div className={`grid grid-cols-1 gap-4 ${!isMobile ? 'md:grid-cols-2' : ''}`}>
         <ColorPicker
           selectedScheme={data.settings.colorScheme}
           onChange={handleColorSchemeChange}

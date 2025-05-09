@@ -1,7 +1,9 @@
 
 import React from 'react';
-import { FontChoice, fontMappings } from '@/lib/resumeTypes';
-import { Check } from 'lucide-react';
+import { FontChoice, ResumeData, fontMappings } from '@/lib/resumeTypes';
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useIsMobile } from '@/hooks/use-mobile';
+import { Text } from 'lucide-react';
 
 interface FontPickerProps {
   selectedFont: FontChoice;
@@ -9,41 +11,55 @@ interface FontPickerProps {
 }
 
 const FontPicker: React.FC<FontPickerProps> = ({ selectedFont, onChange }) => {
-  const fontOptions: Array<{ value: FontChoice; label: string; preview: string }> = [
-    { value: 'default', label: 'Standard', preview: 'Aa' },
-    { value: 'elegant', label: 'Élégante', preview: 'Aa' },
-    { value: 'modern', label: 'Moderne', preview: 'Aa' },
-    { value: 'technical', label: 'Technique', preview: 'Aa' },
+  const isMobile = useIsMobile();
+  
+  const fontOptions: { value: FontChoice; label: string; sample: string }[] = [
+    { value: 'default', label: 'Standard', sample: 'Aa Bb Cc' },
+    { value: 'elegant', label: 'Élégant', sample: 'Aa Bb Cc' },
+    { value: 'modern', label: 'Moderne', sample: 'Aa Bb Cc' },
+    { value: 'technical', label: 'Technique', sample: 'Aa Bb Cc' },
   ];
 
   return (
-    <div className="p-4 border rounded-lg shadow-sm bg-white">
-      <h3 className="mb-3 text-base font-medium">Police du CV</h3>
-      <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
-        {fontOptions.map((font) => {
-          const isSelected = selectedFont === font.value;
-          const mappings = fontMappings[font.value];
-          
-          return (
+    <Card className="border shadow-sm bg-white">
+      <CardHeader className="p-4 pb-0">
+        <CardTitle className="text-base font-medium flex items-center">
+          <Text className="w-4 h-4 mr-2" />
+          Police du CV
+        </CardTitle>
+      </CardHeader>
+      
+      <CardContent className="p-4">
+        <div className={`grid grid-cols-2 ${!isMobile ? 'md:grid-cols-4' : ''} gap-3`}>
+          {fontOptions.map((font) => (
             <div
               key={font.value}
               onClick={() => onChange(font.value)}
-              className={`p-3 border rounded-lg cursor-pointer transition-all ${
-                isSelected ? 'border-cvfacile-primary bg-blue-50' : 'border-gray-200 hover:border-cvfacile-primary'
+              className={`p-4 border rounded-lg cursor-pointer transition-all hover:shadow-md ${
+                selectedFont === font.value
+                  ? 'border-cvfacile-primary bg-blue-50'
+                  : 'border-gray-200'
               }`}
             >
-              <div className={`flex justify-between items-center mb-2 ${mappings.heading}`}>
-                <span>{font.label}</span>
-                {isSelected && <Check className="w-4 h-4 text-cvfacile-primary" />}
-              </div>
-              <div className={`text-2xl text-center ${mappings.body}`}>
-                {font.preview}
+              <p className="mb-2 text-sm text-center">{font.label}</p>
+              <div 
+                className={`flex items-center justify-center p-3 rounded-md bg-white text-lg text-center ${
+                  fontMappings[font.value].heading
+                } ${
+                  selectedFont === font.value ? 'border-2 border-cvfacile-primary' : 'border'
+                }`}
+                style={{ 
+                  height: '50px',
+                  backgroundColor: selectedFont === font.value ? `${selectedFont === font.value ? '#f0f7ff' : '#ffffff'}`
+                }}
+              >
+                {font.sample}
               </div>
             </div>
-          );
-        })}
-      </div>
-    </div>
+          ))}
+        </div>
+      </CardContent>
+    </Card>
   );
 };
 

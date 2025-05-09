@@ -1,4 +1,3 @@
-
 export type ResumePersonalInfo = {
   firstName: string;
   lastName: string;
@@ -9,6 +8,7 @@ export type ResumePersonalInfo = {
   website?: string;
   linkedin?: string;
   summary: string;
+  profileImage?: string | null;
 };
 
 export type ResumeExperience = {
@@ -92,6 +92,7 @@ export const defaultResumeData: ResumeData = {
     website: "",
     linkedin: "",
     summary: "",
+    profileImage: null,
   },
   experiences: [],
   education: [],
