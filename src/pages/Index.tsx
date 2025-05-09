@@ -1,6 +1,5 @@
-
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { defaultResumeData, ResumeData } from "@/lib/resumeTypes";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
@@ -36,6 +35,7 @@ const Index: React.FC = () => {
   const { language, t } = useLanguage();
   const { theme } = useTheme();
   const { toast } = useToast();
+  const navigate = useNavigate();
 
   // Update resume language when app language changes
   useEffect(() => {
@@ -81,9 +81,14 @@ const Index: React.FC = () => {
     toast({
       title: language === 'fr' ? "CV sauvegardé" : "CV saved",
       description: language === 'fr' 
-        ? "Votre CV a été sauvegardé avec succès" 
-        : "Your CV has been successfully saved",
+        ? "Votre CV a été sauvegardé avec succès, consultez votre tableau de bord" 
+        : "Your CV has been successfully saved, check your dashboard",
     });
+    
+    // Navigate to dashboard after saving
+    setTimeout(() => {
+      navigate('/dashboard');
+    }, 1500);
   };
 
   return (

@@ -45,7 +45,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setIsLoading(false);
   }, []);
 
-  // Mock login function (replace with real API calls when backend is ready)
+  // Login function - in a real app this would call an API
   const login = async (email: string, password: string) => {
     try {
       // This is a mock implementation
@@ -58,7 +58,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
-  // Mock register function (replace with real API calls when backend is ready)
+  // Register function - in a real app this would call an API
   const register = async (email: string, password: string, name?: string) => {
     try {
       // This is a mock implementation

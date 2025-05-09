@@ -39,6 +39,11 @@ const Navbar: React.FC = () => {
           <Link to="/" className={`${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'} transition-colors hover:text-cvfacile-primary`}>
             {t('app.faq')}
           </Link>
+          {isAuthenticated && (
+            <Link to="/dashboard" className={`${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'} transition-colors hover:text-cvfacile-primary`}>
+              {t('app.dashboard')}
+            </Link>
+          )}
         </nav>
         
         <div className="flex items-center space-x-2 sm:space-x-4">
