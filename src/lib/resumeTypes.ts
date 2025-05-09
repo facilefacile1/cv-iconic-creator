@@ -1,3 +1,4 @@
+
 export type ResumePersonalInfo = {
   firstName: string;
   lastName: string;
@@ -69,6 +70,7 @@ export type ResumeSettings = {
   template: TemplateType;
   colorScheme: ColorScheme;
   font: FontChoice;
+  language?: 'fr' | 'en'; // Added language property
 };
 
 export type ResumeData = {
@@ -109,6 +111,7 @@ export const defaultResumeData: ResumeData = {
       text: "#1E293B",
     },
     font: "default",
+    language: 'fr', // Default to French
   },
 };
 
