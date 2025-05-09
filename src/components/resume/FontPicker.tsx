@@ -50,7 +50,7 @@ const FontPicker: React.FC<FontPickerProps> = ({ selectedFont, onChange }) => {
                 }`}
                 style={{ 
                   height: '50px',
-                  backgroundColor: selectedFont === font.value ? `${selectedFont === font.value ? '#f0f7ff' : '#ffffff'}`
+                  backgroundColor: selectedFont === font.value ? '#f0f7ff' : '#ffffff'
                 }}
               >
                 {font.sample}

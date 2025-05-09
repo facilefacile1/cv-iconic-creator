@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { generatePDF } from '@/lib/pdfGenerator';
 import { ResumeData } from '@/lib/resumeTypes';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { useTheme } from '@/context/ThemeContext';
 
 interface PDFButtonProps {
   resumeData: ResumeData;
@@ -13,6 +14,7 @@ interface PDFButtonProps {
 
 const PDFButton: React.FC<PDFButtonProps> = ({ resumeData, previewId }) => {
   const isMobile = useIsMobile();
+  const { theme } = useTheme();
   
   const handleDownload = () => {
     generatePDF(resumeData, previewId);
@@ -21,10 +23,10 @@ const PDFButton: React.FC<PDFButtonProps> = ({ resumeData, previewId }) => {
   return (
     <Button 
       onClick={handleDownload}
-      className="bg-gradient-to-r from-cvfacile-orange to-cvfacile-accent hover:opacity-90 transition-all shadow-md"
+      className={`${theme === 'dark' ? 'bg-gradient-to-r from-purple-600 to-indigo-700' : 'bg-gradient-to-r from-cvfacile-orange to-cvfacile-accent'} hover:opacity-90 transition-all shadow-md`}
     >
       <Download className="w-4 h-4 mr-2" />
-      {isMobile ? 'PDF' : 'Télécharger en PDF'}
+      {isMobile ? 'PDF' : resumeData.settings.language === 'fr' ? 'Télécharger en PDF' : 'Download PDF'}
     </Button>
   );
 };

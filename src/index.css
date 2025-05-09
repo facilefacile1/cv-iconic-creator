@@ -119,4 +119,16 @@
   .text-gradient-primary {
     @apply bg-gradient-to-r from-cvfacile-primary to-cvfacile-accent bg-clip-text text-transparent;
   }
+  
+  .dark-gradient-primary {
+    @apply dark:bg-gradient-to-r dark:from-purple-500 dark:to-indigo-600;
+  }
+  
+  .dark-gradient-secondary {
+    @apply dark:bg-gradient-to-r dark:from-blue-500 dark:to-teal-400;
+  }
+  
+  .dark-text-gradient-primary {
+    @apply dark:bg-gradient-to-r dark:from-purple-400 dark:to-indigo-300 dark:bg-clip-text dark:text-transparent;
+  }
 }
