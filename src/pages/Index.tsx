@@ -271,37 +271,39 @@ const Index: React.FC = () => {
           </div>
         </section>
         
-        {/* CTA Section */}
-        <section className={`py-12 md:py-16 text-white ${
-          theme === 'dark'
-            ? 'bg-gradient-to-br from-indigo-900 to-purple-900'
-            : 'bg-gradient-to-br from-cvfacile-accent to-cvfacile-primary'
-        }`}>
-          <div className="container px-4 mx-auto text-center">
-            <h2 className="mb-6 text-2xl md:text-4xl font-bold font-poppins">
-              {t('app.boost.career')}
-            </h2>
-            <p className="max-w-2xl mx-auto mb-8 text-lg md:text-xl text-white/90">
-              {language === 'fr'
-                ? 'Créez un compte gratuit pour sauvegarder vos CV, accéder à des modèles premium et partager vos réalisations.'
-                : 'Create a free account to save your CVs, access premium templates and share your achievements.'}
-            </p>
-            <div className="flex flex-wrap items-center justify-center gap-4">
-              <Link 
-                to="/register"
-                className="px-6 py-3 text-lg font-medium transition-all bg-white rounded-full text-cvfacile-primary hover:bg-gray-100"
-              >
-                {t('app.create.account')}
-              </Link>
-              <Link 
-                to="/"
-                className="px-6 py-3 text-lg font-medium transition-all border border-white rounded-full hover:bg-white/10"
-              >
-                {t('app.learn.more')}
-              </Link>
+        {/* CTA Section - Only show if not authenticated */}
+        {!isAuthenticated && (
+          <section className={`py-12 md:py-16 text-white ${
+            theme === 'dark'
+              ? 'bg-gradient-to-br from-indigo-900 to-purple-900'
+              : 'bg-gradient-to-br from-cvfacile-accent to-cvfacile-primary'
+          }`}>
+            <div className="container px-4 mx-auto text-center">
+              <h2 className="mb-6 text-2xl md:text-4xl font-bold font-poppins">
+                {t('app.boost.career')}
+              </h2>
+              <p className="max-w-2xl mx-auto mb-8 text-lg md:text-xl text-white/90">
+                {language === 'fr'
+                  ? 'Créez un compte gratuit pour sauvegarder vos CV, accéder à des modèles premium et partager vos réalisations.'
+                  : 'Create a free account to save your CVs, access premium templates and share your achievements.'}
+              </p>
+              <div className="flex flex-wrap items-center justify-center gap-4">
+                <Link 
+                  to="/register"
+                  className="px-6 py-3 text-lg font-medium transition-all bg-white rounded-full text-cvfacile-primary hover:bg-gray-100"
+                >
+                  {t('app.create.account')}
+                </Link>
+                <Link 
+                  to="/"
+                  className="px-6 py-3 text-lg font-medium transition-all border border-white rounded-full hover:bg-white/10"
+                >
+                  {t('app.learn.more')}
+                </Link>
+              </div>
             </div>
-          </div>
-        </section>
+          </section>
+        )}
       </main>
       
       <Footer />

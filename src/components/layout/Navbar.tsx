@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { FileText, LogIn, User, Moon, Sun, Languages } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { useAuth } from '@/context/AuthContext';
@@ -17,26 +17,29 @@ const Navbar: React.FC = () => {
   const { isAuthenticated, user, logout } = useAuth();
   const { theme, toggleTheme } = useTheme();
   const { language, setLanguage, t } = useLanguage();
+  const location = useLocation();
 
   return (
     <header className={`sticky top-0 z-50 ${theme === 'dark' ? 'bg-gray-900 border-gray-800' : 'bg-white border-gray-200'} border-b`}>
       <div className="container flex items-center justify-between h-16 px-4 mx-auto sm:px-6">
         <div className="flex items-center space-x-2">
           <FileText className={`w-8 h-8 ${theme === 'dark' ? 'text-cvfacile-accent' : 'text-cvfacile-primary'}`} />
-          <span className={`text-xl font-bold font-poppins ${theme === 'dark' ? 'text-white' : 'text-gradient-primary'}`}>{language === 'fr' ? 'CV Facile' : 'Easy CV'}</span>
+          <Link to="/" className={`text-xl font-bold font-poppins ${theme === 'dark' ? 'text-white' : 'text-gradient-primary'}`}>
+            {language === 'fr' ? 'CV Facile' : 'Easy CV'}
+          </Link>
         </div>
         
         <nav className="hidden space-x-6 text-sm font-medium md:flex">
           <Link to="/" className={`${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'} transition-colors hover:text-cvfacile-primary`}>
             {t('app.home')}
           </Link>
-          <Link to="/" className={`${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'} transition-colors hover:text-cvfacile-primary`}>
+          <Link to="/templates" className={`${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'} transition-colors hover:text-cvfacile-primary`}>
             {t('app.templates')}
           </Link>
-          <Link to="/" className={`${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'} transition-colors hover:text-cvfacile-primary`}>
+          <Link to="/how-it-works" className={`${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'} transition-colors hover:text-cvfacile-primary`}>
             {t('app.how.works')}
           </Link>
-          <Link to="/" className={`${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'} transition-colors hover:text-cvfacile-primary`}>
+          <Link to="/faq" className={`${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'} transition-colors hover:text-cvfacile-primary`}>
             {t('app.faq')}
           </Link>
           {isAuthenticated && (

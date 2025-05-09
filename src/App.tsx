@@ -13,6 +13,9 @@ import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import EditResume from "./pages/EditResume";
 import NotFound from "./pages/NotFound";
+import Templates from "./pages/Templates";
+import HowItWorks from "./pages/HowItWorks";
+import FAQ from "./pages/FAQ";
 
 const queryClient = new QueryClient();
 
@@ -31,6 +34,9 @@ const App = () => (
                 <Route path="/register" element={<Register />} />
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/edit/:id" element={<EditResume />} />
+                <Route path="/templates" element={<Templates />} />
+                <Route path="/how-it-works" element={<HowItWorks />} />
+                <Route path="/faq" element={<FAQ />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </BrowserRouter>
